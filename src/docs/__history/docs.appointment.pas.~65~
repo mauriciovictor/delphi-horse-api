@@ -1,0 +1,131 @@
+unit docs.appointment;
+
+
+interface
+
+uses
+  Horse,
+  Horse.GBSwagger;
+procedure registry();
+implementation
+
+uses schemas.classes;
+
+procedure registry();
+begin
+      Swagger
+      .Path('produtor/{id_produtor}/apontamento')
+        .Tag('Registro de produção')
+        .GET('listar todo o registro de produção com filtros ', 'listar todo o registro de produção com filtros')
+            .Description('o filtro de data será aplicado somente se data_fim e data_inicio forem preenchidos')
+            .Description('<br/> a paginação só será aplicada se os parametros page e limit forem inseridos ')
+            .AddParamPath('id_produtor', 'id_produtor')
+              .Schema(SWAG_INTEGER)
+              .Required(true)
+            .&End
+            .AddParamQuery('page', 'page')
+              .Schema(SWAG_INTEGER)
+            .&End
+            .AddParamQuery('limit', 'limit')
+              .Schema(SWAG_INTEGER)
+            .&End
+            .AddParamQuery('area', 'area')
+              .Schema(SWAG_Integer)
+              .required(false)
+            .&end
+            .AddParamQuery('tp_prod', 'tp_prod')
+              .Schema(SWAG_STRING)
+              .required(false)
+            .&end
+            .AddParamQuery('data_inicio', 'data_inicio')
+              .Schema(SWAG_STRING)
+              .required(false)
+            .&end
+            .AddParamQuery('data_fim', 'data_fim')
+              .Schema(SWAG_STRING)
+              .required(false)
+            .&end
+          .AddResponse(200)
+            .Schema(TAppointmentPagination)
+            .isArray(true)
+          .&End
+          .AddResponse(404, 'produtor não encontrada')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+
+    Swagger
+      .Path('produtor/{id_produtor}/apontamento')
+        .Tag('Registro de produção')
+        .Post('criar registro de produção', 'criar registro de produção')
+            .AddParamBody
+              .Schema(TAppointment)
+            .&End
+          .AddResponse(200)
+            .Schema(TAppointment)
+          .&End
+          .AddResponse(404, 'produtor não encontrado')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(401, 'token não encontrado ou invalido')
+            .Schema(SWAG_STRING)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+
+    Swagger
+      .Path('produtor/{id_produtor}/apontamento/{id_apontamento}')
+        .Tag('Registro de produção')
+        .Put('alterar área de produção', 'alterar área de produção')
+            .AddParamPath('id_produtor', 'id_produtor')
+              .Schema(SWAG_INTEGER)
+            .&end
+            .AddParamPath('id_apontamento', 'id_apontamento')
+              .Schema(SWAG_INTEGER)
+            .&end
+            .AddParamBody
+              .Schema(TAppointment)
+            .&End
+          .AddResponse(200)
+            .Schema(TRegion)
+          .&End
+          .AddResponse(404, 'produtor não encontrada | apontamento não enctrado')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+
+    Swagger
+      .Path('produtor/{id_produtor}/apontamento/{id_apontamento}')
+        .Tag('Registro de produção')
+        .Delete('deletar instituição', 'deletar uma instituição')
+            .AddParamPath('id_produtor', 'id_produtor')
+              .Schema(SWAG_INTEGER)
+            .&end
+            .AddParamPath('id_apontamento', 'id_apontamento')
+              .Schema(SWAG_INTEGER)
+            .&end
+          .AddResponse(200, 'registro de produção deletada com sucesso')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(404, 'produtor não encontrada | registro de produção não encontrada')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+end;
+
+end.

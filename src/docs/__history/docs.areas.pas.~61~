@@ -1,0 +1,130 @@
+unit docs.areas;
+
+
+interface
+
+uses
+  Horse,
+  Horse.GBSwagger;
+procedure registry();
+implementation
+
+uses schemas.classes;
+
+procedure registry();
+begin
+      Swagger
+      .Path('produtor/{id_produtor}/areas')
+        .Tag('Áreas de Produção')
+        .GET('listar aras de produção de um produtor', 'listar aras de produção de um produtor')
+            .AddParamPath('id_produtor', 'id_produtor')
+              .Schema(SWAG_INTEGER)
+              .isArray(true)
+              .Required(true)
+            .&End
+          .AddResponse(200)
+            .Schema(TProductionArea)
+          .&End
+          .AddResponse(404, 'produtor não encontrada')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+
+    Swagger
+      .Path('produtor/{id_produtor}/areas/{id_area}/foto')
+        .Tag('Áreas de Produção')
+        .GET('listar foto de uma área de produção', 'listar foto de uma área de produção')
+            .AddParamPath('id_produtor', 'id_produtor')
+              .Schema(SWAG_INTEGER)
+              .required(true)
+            .&End
+            .AddParamPath('id_area', 'id_area')
+              .Schema(SWAG_INTEGER)
+              .required(true)
+            .&End
+          .AddResponse(200)
+            .Schema('image/png')
+          .&End
+          .AddResponse(404, 'produtor não encontrada | área não encontrada')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+
+    Swagger
+      .Path('produtor/{id_produtor}/areas')
+        .Tag('Áreas de Produção')
+        .Post('criar instiuição', 'criar uma nova instituição')
+            .AddparamPath('id_produtor', 'id_produtor')
+              .Schema(Swag_Integer)
+            .&end
+            .AddParamBody
+              .Schema(TProductionArea)
+            .&End
+          .AddResponse(200)
+            .Schema(TRegion)
+          .&End
+          .AddResponse(404, 'produtor não encontrado')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+
+    Swagger
+      .Path('produtor/{id_produtor}/areas/{id_area}')
+        .Tag('Áreas de Produção')
+        .Put('alterar uma a´rea de produção', 'alterar uma a´rea de produção')
+            .AddParamPath('id_produtor', 'id_produtor')
+              .Schema(SWAG_INTEGER)
+            .&end
+            .AddParamPath('id_area', 'id_area')
+              .Schema(SWAG_INTEGER)
+            .&end
+            .AddParamBody
+              .Schema(TProductionArea)
+            .&End
+          .AddResponse(200)
+            .Schema(TRegion)
+          .&End
+          .AddResponse(404, 'produtor não encontrada | área não encontrada')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+
+    Swagger
+      .Path('produtor/{id_produtor}/areas/{id_area}')
+        .Tag('Áreas de Produção')
+        .Delete('deletar area de produção', 'deletar area de produção')
+            .AddParamPath('id_produtor', 'id_produtor')
+              .Schema(SWAG_INTEGER)
+            .&end
+            .AddParamPath('id_area', 'id_area')
+              .Schema(SWAG_INTEGER)
+            .&end
+          .AddResponse(200, 'instituição deletada com sucesso')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(404, 'produtor não encontrada | área não encontrada')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+end;
+end.

@@ -1,0 +1,70 @@
+unit UserController;
+
+interface
+
+uses Horse, System.Json, Dataset.serialize, Jsons;
+
+procedure verifyCPF(Req: THorseRequest; Res: THorseResponse; Next: Tproc);
+procedure index(Req: THorseRequest; Res: THorseResponse; Next: Tproc);
+procedure store(Req: THorseRequest; Res: THorseResponse; Next: Tproc);
+
+implementation
+
+uses UsuariosModel;
+
+
+procedure verifyCPF(Req: THorseRequest; Res: THorseResponse; Next: Tproc);
+begin
+
+  if  not Req.Query.ContainsKey('cpf') then
+    begin
+      res.Send('{message: "campo CPF é obrigatorio"}');
+      exit;
+    end;
+
+  const userData = TJson.create;
+  const CPF = req.Query.Items['cpf'];
+  const user = UsuariosModel
+    .findByCPF(CPF)
+    .ToJsonObject()
+    .toString();
+
+  userData.Parse(user);
+
+  if userData['id'].IsEmpty then
+    begin
+      res
+        .Send('{message: "nunhum registro encontrado"}')
+        .status(401);
+      exit;
+    end;
+
+  if userData['Produtor_info'].IsEmpty then
+    begin
+      res
+        .Send('{message: "CPF não pertence a nenhum produtor"}')
+        .status(401);
+      exit;
+    end;
+
+  res.Send(user).Status(200);
+end;
+
+procedure store(Req: THorseRequest; Res: THorseResponse; Next: Tproc);
+begin
+
+   const userData = TJson.Create;
+   userData.parse(req.body);
+
+//   userData.
+//
+//   res.Send(userData['produtor'].AsString);
+
+end;
+
+procedure index(Req: THorseRequest; Res: THorseResponse; Next: Tproc);
+begin
+end;
+
+
+end.

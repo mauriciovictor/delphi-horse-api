@@ -1,0 +1,34 @@
+//  const formData = req.ContentFields;
+//  const webResquest = THorseHackRequest(Req).GetWebRequest;
+//
+//  var base64: string := '';
+//  const fileStream = TMemoryStream.Create;
+//
+//  if TMultipartContentParserAccess.CanParse(webResquest) then
+//    begin
+//      const LMpReq = TMultipartContentParserAccess.Create(webResquest);
+//      const files = LMpReq.GetFiles;
+//
+//      for var I := 0 to Pred(files.count) do
+//        begin
+//            const LFile = files[I];
+//            fileStream.LoadFromStream(LFile.Stream);
+//            base64 :=  EncodeBase64(
+//              fileStream.Memory,
+//              fileStream.Size
+//            );
+//        end;
+//    end;
+
+//  formData.ExtractPair('id_produtor').Value;
+
+//    FileStream.Position := 0;
+//    Res.Status(THTTPStatus.OK);
+//
+//    res.RawWebResponse.ContentType := 'image/jpg';
+//    var aType := '';
+//    var aKind := '';
+//
+//    Writeln(GetMIMETypeFromFile(base64));
+//    Res.RawWebResponse.ContentStream := FileStream;
+//    Res.RawWebResponse.SendResponse;

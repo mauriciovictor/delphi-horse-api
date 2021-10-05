@@ -1,0 +1,33 @@
+unit TesteModel;
+
+interface
+
+
+uses connection, Ragna, System.JSON, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.ConsoleUI.Wait, Data.DB,
+  FireDAC.Comp.Client, FireDAC.Phys.PG, FireDAC.Phys.PGDef, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
+  FireDAC.Comp.DataSet;
+
+Function Post(Test: TjsonObject): TFDQuery;
+function findAll(): TFDQuery;
+//function findByPK(): TFDQuery;
+
+implementation
+
+Function Post(Test: TjsonObject): TFDQuery;
+begin
+  var Teste := TDMConnection.Create(DMConnection).Teste;
+  Teste.where('cod').Equals(1).openup();
+  Result := Teste;
+end;
+
+function findAll(): TFDQuery;
+begin
+  var Teste := TDMConnection.Create(DMConnection).Teste;
+  Teste.OpenUp;
+  Result := Teste;
+end;
+
+
+
+end.

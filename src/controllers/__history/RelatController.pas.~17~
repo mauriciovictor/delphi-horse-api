@@ -1,0 +1,34 @@
+unit RelatController;
+
+interface
+
+uses Horse, Jsons, System.JSON, Horse.JWT,
+  JOSE.Core.JWT, JOSE.Core.Builder,
+  System.DateUtils, System.SysUtils,
+  System.RegularExpressions, Ragna, Dataset.serialize;
+
+procedure RelatMonthYearProducersProducerSale(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+
+implementation
+
+uses RelatModel;
+
+procedure RelatMonthYearProducersProducerSale(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+begin
+  if not req.Query.ContainsKey('mes_ano') then
+    begin
+       res.send('{"message" : "Parametro mes_ano não pode ser vazio" }').status(401);
+       raise EHorseCallbackInterrupted.Create;
+    end;
+
+  const mes_ano = req.query.Items['mes_ano'];
+  const regiao = req.query.Items['regiao'];
+
+  const relat = RelatModel.FindRelatMonthYearProducersConsumerSale(mes_ano);
+
+
+  res.Send(relat.ToJSONArray);
+
+end;
+
+end.

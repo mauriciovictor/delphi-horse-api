@@ -1,0 +1,62 @@
+unit interfaces.data;
+
+interface
+
+uses
+  GBSwagger.Model.Attributes,
+  System.Variants,
+  System.Generics.Collections;
+
+type
+
+ TProducer = class
+  private
+    Fid: Integer;
+    Fid_comunidade: Integer;
+    Fresidencia_gps_x: string;
+    Fresidencia_gps_y: string;
+    Fdata_nascimento : string;
+    Fgenero : string;
+    public
+      [SwagNumber(1, 100)]
+      property id: Integer read Fid write Fid;
+      property id_comunidade: Integer read Fid_comunidade write Fid_comunidade;
+      property residencia_gps_x: string read Fresidencia_gps_x write Fresidencia_gps_x;
+      property residencia_gps_y: string read Fresidencia_gps_y write Fresidencia_gps_y;
+      property data_nascimento: string read Fdata_nascimento write Fdata_nascimento;
+      property genero: string read Fgenero write Fgenero;
+  end;
+
+ Tmessage = class
+  private
+    Fmessage : string;
+    public
+      property message: string read Fmessage write Fmessage;
+  end;
+
+ TUserProducer = class
+  private
+    Fid: Integer;
+    Fid_grupo: integer;
+    FCPF: string;
+    Fprodutor: string;
+    Fnome_usuario: string;
+    Fstatus_usu: string;
+	  Ffoto: string;
+    Fprodutor_info : TProducer;
+    public
+      [SwagNumber(1, 100)]
+      property id: Integer read Fid write Fid;
+      property id_grupo: integer read Fid_grupo write Fid_grupo;
+      property cpf: String read FCpf write FCpf;
+      property produtor: string read Fprodutor write Fprodutor;
+      property nome_usuario: string read Fnome_usuario write Fnome_usuario;
+      property status_usu: string read Fstatus_usu write Fstatus_usu;
+      property foto: string read Ffoto write Ffoto;
+      property produtor_info: TProducer read Fprodutor_info write Fprodutor_info;
+  end;
+
+
+implementation
+
+end.

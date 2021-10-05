@@ -1,0 +1,15 @@
+unit UserExists;
+
+interface
+
+uses Horse;
+
+procedure update(Req: THorseRequest; Res: THorseResponse; Next: Tproc);
+implementation
+
+procedure update(Req: THorseRequest; Res: THorseResponse; Next: Tproc);
+begin
+
+end;
+
+end.

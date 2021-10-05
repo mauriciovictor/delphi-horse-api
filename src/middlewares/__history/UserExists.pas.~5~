@@ -1,0 +1,26 @@
+unit UserExists;
+
+interface
+
+uses Horse;
+
+procedure update(Req: THorseRequest; Res: THorseResponse; Next: Tproc);
+implementation
+
+uses UsuariosModel;
+
+procedure update(Req: THorseRequest; Res: THorseResponse; Next: Tproc);
+begin
+  if not req.Params.ContainsKey('id') then
+      begin
+           res.Send('{message: id usuário é obrigatorio}');
+           exit;
+      end;
+
+  const id =  req.Params.ContainsKey('id');
+  const usuario = UsuariosModel.findById()
+
+  Next();
+end;
+
+end.

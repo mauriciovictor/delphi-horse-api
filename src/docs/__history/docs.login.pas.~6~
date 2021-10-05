@@ -1,0 +1,41 @@
+unit docs.login;
+
+interface
+
+uses
+  Horse,
+  Horse.GBSwagger;
+procedure registry();
+implementation
+
+uses schemas.classes;
+
+procedure registry();
+begin
+    Swagger
+      .Path('login')
+        .Tag('Login')
+        .Post('autentição api', 'criar uma nova unidade medidads')
+            .AddParamBody
+              .Schema(TUnity)
+            .&End
+            .AddParamHeader('Authorization', 'bearer token jwt')
+              .Schema(SWAG_STRING)
+          .&End
+          .AddResponse(200)
+            .Schema(TUnity)
+          .&End
+          .AddResponse(404, 'unidade medida não encontrada')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(401, 'token não encontrado ou invalido')
+            .Schema(SWAG_STRING)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+end;
+
+end.

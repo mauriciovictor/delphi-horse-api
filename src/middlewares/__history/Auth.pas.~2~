@@ -1,0 +1,16 @@
+unit Auth;
+
+interface
+
+procedure Authorization(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+
+
+implementation
+
+procedure Authorization(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+begin
+  const token = TRegex.Split(req.Headers['Authorization'], ' ')[1];
+  var LToken := TJOSE.DeserializeCompact('MY-PASSWORD', token);
+  res.Send(LToken.Claims.JSON.ToJSON);
+end;
+end.

@@ -1,0 +1,193 @@
+unit docs.region;
+
+interface
+
+uses
+  Horse,
+  Horse.GBSwagger;
+procedure registry();
+implementation
+
+uses schemas.classes;
+
+procedure registry();
+begin
+      Swagger
+      .Path('regiao/{id_regiao}')
+        .Tag('Regiões de atendimento')
+        .GET('listar uma região', 'listar região especifica')
+            .AddParamPath('id_regiao', 'id_regiao')
+              .Schema(SWAG_INTEGER)
+              .Required(true)
+            .&End
+            .AddParamHeader('Authorization', 'bearer token jwt')
+              .Schema(SWAG_STRING)
+          .&End
+          .AddResponse(200)
+            .Schema(TRegion)
+          .&End
+          .AddResponse(404, 'região não encontrada')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+
+    Swagger
+      .Path('regiao')
+        .Tag('Regiões de atendimento')
+        .GET('listar regiões com paginação', 'listagem de regões com paginação e filtros')
+            .Description('o query param find representa o nome de uma coluna do banco e value o valor que sera colocado no criterio de filtro exemplo: find=id&value=10')
+            .AddParamQuery('page', 'page')
+              .Schema(SWAG_INTEGER)
+            .&End
+            .AddParamQuery('limit', 'limit')
+              .Schema(SWAG_INTEGER)
+            .&End
+            .AddParamQuery('find', 'find')
+              .Schema(SWAG_STRING)
+            .&End
+            .AddParamQuery('value', 'value')
+              .Schema(SWAG_STRING)
+            .&End
+            .AddParamHeader('Authorization', 'bearer token jwt')
+              .Schema(SWAG_STRING)
+          .&End
+          .AddResponse(200)
+            .Schema(TRegion)
+            .isArray(true)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+
+    Swagger
+      .Path('regiao/all')
+        .Tag('Regiões de atendimento')
+        .GET('listar todas as regiões', 'listagem de regões com paginação e filtros')
+            .Description('o query param find representa o nome de uma coluna do banco e value o valor que sera colocado no criterio de filtro exemplo: find=id&value=10')
+            .AddParamQuery('page', 'page')
+              .Schema(SWAG_INTEGER)
+            .&End
+            .AddParamQuery('limit', 'limit')
+              .Schema(SWAG_INTEGER)
+            .&End
+            .AddParamQuery('find', 'find')
+              .Schema(SWAG_STRING)
+            .&End
+            .AddParamQuery('value', 'value')
+              .Schema(SWAG_STRING)
+            .&End
+            .AddParamHeader('Authorization', 'bearer token jwt')
+              .Schema(SWAG_STRING)
+          .&End
+          .AddResponse(200)
+            .Schema(TRegion)
+            .isArray(true)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+
+    Swagger
+      .Path('regiao')
+        .Tag('Regiões de atendimento')
+        .Post('criar região', 'criar uma nova região')
+            .AddParamBody
+              .Schema(TRegion)
+            .&End
+            .AddParamHeader('Authorization', 'bearer token jwt')
+              .Schema(SWAG_STRING)
+          .&End
+          .AddResponse(200)
+            .Schema(TRegion)
+          .&End
+          .AddResponse(404, 'região não encontrada')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(401, 'token não encontrado ou invalido')
+            .Schema(SWAG_STRING)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+
+    Swagger
+      .Path('regiao/{id_regiao}')
+        .Tag('Regiões de atendimento')
+        .Put('alterar região', 'alteração de uma região')
+            .AddParamPath('id_regiao', 'id_regiao')
+              .Schema(SWAG_INTEGER)
+            .&end
+            .AddParamBody
+              .Schema(TRegion)
+            .&End
+            .AddParamHeader('Authorization', 'bearer token jwt')
+              .Schema(SWAG_STRING)
+          .&End
+          .AddResponse(200)
+            .Schema(TRegion)
+          .&End
+          .AddResponse(404, 'região não encontrada')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(401, 'token não encontrado ou invalido')
+            .Schema(SWAG_STRING)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+
+    Swagger
+      .Path('regiao/{id_regiao}')
+        .Tag('Regiões de atendimento')
+        .Delete('deletar região', 'deletar uma região')
+            .AddParamPath('id_regiao', 'id_regiao')
+              .Schema(SWAG_INTEGER)
+            .&end
+            .AddParamHeader('Authorization', 'bearer token jwt')
+              .Schema(SWAG_STRING)
+          .&End
+          .AddResponse(200, 'região deletada com sucesso')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(404, 'região não encontrada')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(401, 'token não encontrado ou invalido, não foi possivel deletar a região')
+            .Schema(SWAG_STRING)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+
+    Swagger
+      .Path('produtor')
+        .Tag('Produtor')
+        .POST('novo produtor', 'rota utilizada para criar um novo produtor')
+          .AddResponse(200)
+            .Schema(TUserProducer)
+          .&End
+          .AddResponse(404, 'usuário não encontrado')
+            .Schema(TMessage)
+          .&End
+          .AddResponse(500, 'Internal Server Error')
+          .&End
+        .&End
+      .&End
+    .&End;
+end;
+
+end.
